@@ -1,0 +1,35 @@
+---
+title: My Slide Title
+author:
+    - name: "Julius Welzel"
+title-slide-attributes:
+    data-background-image: pics/128_cap.jpg
+    data-background-size: cover
+    data-background-opacity: "0.4"
+subtitle: "Synchronise mutlimodal data streams"
+format: 
+    revealjs: 
+        slide-number: true
+            chalkboard:
+                buttons: false
+        preview-links: auto
+        logo: logo/BIDS_logo.png
+        css: styles.css
+        margin: 0.1
+        smaller: true
+
+---
+
+# LabStreamingLayer (LSL)
+
+LSL distribution comprises:
+    - **Core Library:** liblsl and language interfaces (C, C++, Python 3, Java 2, C# 1, MATLAB).
+    - **Platform:** General-purpose and cross-platform (Win / Linux / MacOS / Android / iOS).
+    - **Architecture:** Supports x86, amd64, and arm.
+
+# Using LSL for Multimodal Data Recording
+
+How to use LSL:
+    - Creat LSL outlets per device
+    - Capture and store data using the recording program.
+    
