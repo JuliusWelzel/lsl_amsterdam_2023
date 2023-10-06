@@ -1,0 +1,68 @@
+---
+title: LSL
+author:
+    - name: "Julius Welzel"
+title-slide-attributes:
+    data-background-image: pics/128_cap.jpg
+    data-background-size: cover
+    data-background-opacity: "0.4"
+subtitle: "Synchronise mutlimodal data streams"
+format: 
+    revealjs: 
+        slide-number: true
+        chalkboard:
+            buttons: false
+        preview-links: auto
+        css: style.css
+        margin: 0.1
+        smaller: true
+
+---
+
+## LabStreamingLayer (LSL)
+
+LSL [distribution](https://github.com/sccn/labstreaminglayer) comprises:
+
+    - Core Library: liblsl and language interfaces (C, C++, Python, Java, MATLAB).
+    - Platform: General-purpose and cross-platform (Windows, Linux, macOS, Android).
+    - Architecture: Supports x86, amd64, and arm.
+
+## Using LSL for Multimodal Data Recording
+
+The most common way to use LSL is to use one or more applications to stream data from one or more devices (e.g., EEG and Eye Tracker) over the local network and record the with the [LabRecorder](https://github.com/labstreaminglayer/App-LabRecorder).
+
+Steps to use LSL:
+
+    1. Creat LSL outlet
+    2. Fetch data from device
+    3. Push data to LSL outlet
+    
+## Example Matlab Code
+
+```matlab
+%% instantiate the library
+disp('Loading library...');
+lib = lsl_loadlib();
+
+% make a new stream outlet
+disp('Creating a new streaminfo...');
+info = lsl_streaminfo(lib,'DelSys','EMG',8,100,'cf_float32'); % 8 channels, 100 Hz, float32
+
+% initiate DelSys Trigno wireless EMG SDK
+
+DelsysInput = tcpip(HOST_IP,50041); % HOST_IP is the IP address of the computer running the Delsys SDK, 50041 is the default port
+DelsysInput.InputBufferSize = 6400; % Buffer size for the input stream
+
+disp('Opening an outlet...');
+outlet = lsl_outlet(info);
+
+% send data into the outlet, sample by sample
+disp('Now transmitting data...');
+while true
+    % get data from device
+    tmp_data = fread(DelsysInput,bytesReady); % read data from device (8 channel EMG)
+
+    % push data to LSL outlet
+    outlet.push_sample(tmp_data); % push data to LSL outlet
+end
+```
